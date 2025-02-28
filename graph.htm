@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여론스캐너</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { display: flex; font-family: Arial, sans-serif; margin: 0; }
+        .sidebar { width: 200px; background: #333; color: white; padding: 20px; height: 100vh; position: fixed; }
+        .sidebar a { display: block; color: white; text-decoration: none; padding: 10px 0; }
+        .sidebar a:hover { background: #575757; }
+        .content { margin-left: 220px; padding: 20px; flex-grow: 1; text-align: center; }
+        .chart-container { width: 80%; height: 500px; max-width: 800px; margin: 20px auto; position: relative; }
+        canvas { width: 100% !important; height: 100% !important; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>여론스캐너</h3>
+        <a href="#">정당 지지도</a>
+        <a href="#">차기 대통령 선호도</a>
+        <a href="#">분석 보고서</a>
+        <a href="#">설정</a>
+        <p>출처:중앙선거여론조사심의위원회 홈페이지</p>
+    </div>
+    <div class="content">
+        <h2>대한민국 정당 지지도 여론조사 결과</h2>
+        <div class="chart-container">
+            <canvas id="partyChart"></canvas>
+        </div>
+    </div>
+    
+    <script>
+        const ctx = document.getElementById('partyChart').getContext('2d');
+        const partyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['1월 1주', '1월 2주', '1월 3주', '1월 4주', '1월 5주', '2월 1주', '2월 2주', '2월 3주'], // 날짜
+                datasets: [
+                    { label: '더불어민주당', data: [42.2, 39.6, 38.3, 39.3, 40.3, 41.0, 40.1, 40.0], borderColor: 'blue', backgroundColor: 'blue', type: 'line', fill: false },
+                    { label: '국민의힘', data: [31.4, 38.3, 42.8, 43.2, 41.0, 41.4, 41.6, 40.8], borderColor: 'red', backgroundColor: 'red', type: 'line', fill: false },
+                    { label: '조국혁신당', data: [5.3, 5.0, 4.2, 4.1, 4.4, 4.0, 4.0, 4.6], borderColor: '#0c69b5', backgroundColor: '#0c69b5', type: 'line', fill: false },
+                    { label: '개혁신당', data: [2.7, 2.6, 2.1, 1.9, 2.2, 2.0, 1.8, 2.0], borderColor: 'orange', backgroundColor: 'orange', type: 'line', fill: false },
+                    { label: '진보당', data: [1.1, 0.9, 0.9, 0.8, 0.6, 0.7, 0.7, 0.9], borderColor: 'yellow', backgroundColor: 'yellow', type: 'line', fill: false },
+                    { label: '기타 정당(합산)', data: [2.1, 2.8, 2.2, 1.6, 2.1, 2.1, 1.8, 2.2], borderColor: 'pink', backgroundColor: 'pink', type: 'line', fill: false },
+                    { label: '지지정당없음/모름', data: [15.4, 10.9, 9.8, 9.2, 9.7, 9.0, 9.8, 9.4], backgroundColor: 'gray' },
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 50 }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
